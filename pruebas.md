@@ -75,3 +75,139 @@ Error topográfico tras 500 iteraciones: 0.017964071856287425
 Medida de divergencia tras 500 iteraciones: 8192.38249279116
 
 La mejor red neuronal encontrada en esta configuración de hiperparámetros es la red neuronal entrenada con la forma de 6x5, dado que es la que presenta el mejor equilibrio en las medidas de error de cuantización, aunque el error topográfico no es el mejor, se mantiene en un rango aceptable.
+
+
+## 4.2. Prueba 2
+
+### 4.2.1. Configuración de Hiperparámetros
+
+```python
+# 16 combinaciones de mapa: [4..7] x [4..7]
+# Tasa de aprendizaje menor a 0.5
+# Criterio de selección:
+#   1) Aceptar solo topologías con ET bajo
+#   2) Elegir el menor EC entre los modelos aceptados
+```
+
+### 4.2.2. Conclusiones de configuración
+
+Dentro del conjunto de pruebas realizadas con una tasa de aprendizaje menor a 0.5, se observa que:
+
+- **Métrica EC**: [1.3468, 1.5445] -> El mejor valor de cuantización se obtiene con la red de forma 7x7 (EC = 1.3468).
+- **Métrica ET**: [0.0000, 0.0719] -> La mayoría de configuraciones mantienen un error topográfico nulo o muy bajo, por lo que son aceptadas en topología.
+
+Analizando el trade-off entre ambas métricas, el criterio de selección favorece las redes aceptadas topológicamente con menor EC, resultando como mejor modelo la red 7x7.
+
+### 4.2.3. Resultados de cada red neuronal
+
+PRUEBA 1/16 | Mapa: 4x4 | L.R.: 0.1
+
+Error topográfico (ET): 0.0719
+Error de cuantización (EC): 1.5247
+Estado: Aceptado en topología | Nuevo mejor modelo en ese momento
+
+PRUEBA 2/16 | Mapa: 4x5 | L.R.: 0.1
+
+Error topográfico (ET): 0.0180
+Error de cuantización (EC): 1.5368
+Estado: Aceptado en topología | No supera el EC actual (1.5247)
+
+PRUEBA 3/16 | Mapa: 4x6 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4794
+Estado: Aceptado en topología | Nuevo mejor modelo
+
+PRUEBA 4/16 | Mapa: 4x7 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4808
+Estado: Aceptado en topología | No supera el EC actual (1.4794)
+
+PRUEBA 5/16 | Mapa: 5x4 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.5445
+Estado: Aceptado en topología | No supera el EC actual (1.4794)
+
+PRUEBA 6/16 | Mapa: 5x5 | L.R.: 0.1
+
+Error topográfico (ET): 0.0240
+Error de cuantización (EC): 1.4389
+Estado: Aceptado en topología | Nuevo mejor modelo
+
+PRUEBA 7/16 | Mapa: 5x6 | L.R.: 0.1
+
+Error topográfico (ET): 0.0240
+Error de cuantización (EC): 1.4683
+Estado: Aceptado en topología | No supera el EC actual (1.4389)
+
+PRUEBA 8/16 | Mapa: 5x7 | L.R.: 0.1
+
+Error topográfico (ET): 0.0060
+Error de cuantización (EC): 1.4547
+Estado: Aceptado en topología | No supera el EC actual (1.4389)
+
+PRUEBA 9/16 | Mapa: 6x4 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4965
+Estado: Aceptado en topología | No supera el EC actual (1.4389)
+
+PRUEBA 10/16 | Mapa: 6x5 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4410
+Estado: Aceptado en topología | No supera el EC actual (1.4389)
+
+PRUEBA 11/16 | Mapa: 6x6 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4047
+Estado: Aceptado en topología | Nuevo mejor modelo
+
+PRUEBA 12/16 | Mapa: 6x7 | L.R.: 0.1
+
+Error topográfico (ET): 0.0060
+Error de cuantización (EC): 1.4369
+Estado: Aceptado en topología | No supera el EC actual (1.4047)
+
+PRUEBA 13/16 | Mapa: 7x4 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.5120
+Estado: Aceptado en topología | No supera el EC actual (1.4047)
+
+PRUEBA 14/16 | Mapa: 7x5 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4352
+Estado: Aceptado en topología | No supera el EC actual (1.4047)
+
+PRUEBA 15/16 | Mapa: 7x6 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.4081
+Estado: Aceptado en topología | No supera el EC actual (1.4047)
+
+PRUEBA 16/16 | Mapa: 7x7 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.3468
+Estado: Aceptado en topología | Nuevo mejor modelo
+
+#### 4.2.4. Mejor red neuronal encontrada
+
+PRUEBA 16/16 | Mapa: 7x7 | L.R.: 0.1
+
+Error topográfico (ET): 0.0000
+Error de cuantización (EC): 1.3468
+
+La mejor red neuronal encontrada en esta configuración de hiperparámetros es la red de forma 7x7, al presentar el menor error de cuantización entre todas las configuraciones aceptadas topológicamente.
+
+### 4.2.5. Conclusión comparativa observable
+
+Como conclusión observable, al emplear un ratio de aprendizaje menor a 0.5, las mejores redes neuronales tienden a coincidir con estructuras cuadradas. Sin embargo, en los histogramas 3D se aprecia una distribución de valores más desproporcionada e incluso presencia de neuronas muertas. En cambio, el modelo que emplea un ratio de aprendizaje mayor o igual a 0.5 presenta una distribución más equilibrada y homogénea de la activación neuronal.
+
+
+
